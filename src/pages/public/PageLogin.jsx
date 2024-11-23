@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ContextDatas } from "../../services/Context";
 import { basePath } from "../../services/UrlPaths";
 
-function PageLogin() { 
+function PageLogin() {
   const [userData, setUserData] = useState({
     username: "",
     password: "",
@@ -18,11 +18,11 @@ function PageLogin() {
 
 
   useEffect(() => {
-      if (isLogedIn) {
-        window.location.href = basePath
-      }
+    if (isLogedIn) {
+      window.location.href = basePath
+    }
   }, [])
-  
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserData({
@@ -31,34 +31,43 @@ function PageLogin() {
     });
   };
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     setValidated(true);
-    
+
     if (form.checkValidity() === false) {
       event.stopPropagation();
       return;
     }
+
     try {
+      const response = await fetch("http://localhost:5000/users");
+      const users = await response.json();
 
-      const response = await ApiCall("post", "/auth/login", {
-        username: userData.username,
-        password: userData.password,
-      });
-      console.log("API Response:", response);
-      if (response.status) {
-        localStorage.setItem("token" ,response?.message?.data?.token )
-        window.location.href = "/";
-        toast.success("Login successfully!");
+      const user = users.find(
+        (u) =>
+          u.username === userData.username && u.password === userData.password
+      );
+
+      if (user) {
+        localStorage.setItem("userId", user.id);
+        localStorage.setItem("role", user.role);
+
+        toast.success("Login successful!");
+
+        if (user.role === 'admin') {
+          window.location.href = "/user-list";
+        } else {
+          window.location.href = "/welcome";
+        }
       } else {
-        console.log("Error adding product:", response);
-        setErrorMessage("Incorrect username & password");
+        setErrorMessage("Incorrect username or password");
       }
-
     } catch (error) {
       console.error("Error logging in:", error);
-      
+      setErrorMessage("Something went wrong. Please try again.");
     }
   };
 
@@ -88,37 +97,37 @@ function PageLogin() {
                             <label>Username or Email Address</label>
                             <input
                               className="form-control ih-medium ip-light radius-xs b-light px-15"
-                              required id="name" 
+                              required id="name"
                               type="text"
                               placeholder="Enter username or email"
-                              name="username" 
+                              name="username"
                               value={userData.username}
-                              onChange={handleInputChange} 
+                              onChange={handleInputChange}
                             />
                             <Form.Control.Feedback type="invalid">Please add username</Form.Control.Feedback>
-                            
+
                           </div>
 
                           <div className="form-group">
                             <label>Password</label>
                             <input
                               className="form-control ih-medium ip-light radius-xs b-light px-15"
-                              required id="password" 
+                              required id="password"
                               type="password"
                               placeholder="Password"
                               name="password"
                               value={userData.password}
-                              onChange={handleInputChange} 
+                              onChange={handleInputChange}
                             />
                             <Form.Control.Feedback type="invalid">Please add password</Form.Control.Feedback>
-                           
+
                           </div>
 
                           <button className="btn btn-primary btn-default btn-squared px-30 w-100 mt-4" type="submit">
                             Sign in
                           </button>
                           {errorMessage && (
-                            <div className="text-danger mt-3 radius-xs b-light" style={{fontSize: ".875em",color:"#DF060A",border:"none"}}>{errorMessage}</div>
+                            <div className="text-danger mt-3 radius-xs b-light" style={{ fontSize: ".875em", color: "#DF060A", border: "none" }}>{errorMessage}</div>
                           )}
                         </Form>
                       </div>
@@ -130,9 +139,9 @@ function PageLogin() {
           </div>
         </div>
       </main>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
-    
+
   );
 }
 

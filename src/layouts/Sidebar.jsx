@@ -2,11 +2,8 @@ import React, { useContext } from "react";
 import { ContextDatas } from "../services/Context";
 import {
   basePath,
-  notificationPath,
-  outletsPath,
-  settingsPath,
   usersPath,
-  historyPath,
+  welcomePath,
   // productsPath,
 } from "../services/UrlPaths";
 import { Link, useLocation } from "react-router-dom";
@@ -20,41 +17,35 @@ function Sidebar() {
     setUrlPath(path);
   };
 
+  const role = localStorage.getItem("role");
+
   return (
     <div className="sidebar-wrapper">
       <div
-        className={`sidebar sidebar-collapse ${
-          mobileSide ? "collapsed" : ""
-        }`}
+        className={`sidebar sidebar-collapse ${mobileSide ? "collapsed" : ""
+          }`}
         id="sidebar"
       >
         <div className="sidebar__menu-group">
           <ul className="sidebar_nav">
-            {/* <li className={location.pathname === basePath ? "active" : ""}>
-              <Link to={basePath} onClick={() => handleMenuItemClick(basePath)}>
-                <span className="nav-icon uil uil-create-dashboard" />
-                <span className="menu-text">Products</span>
-              </Link>
-            </li> */}
-            {/* <li className={location.pathname.includes("outlet") ? "active" : ""}>
-              <Link to={basePath + outletsPath} onClick={() => handleMenuItemClick(basePath + outletsPath)}>
-                <span className="nav-icon uil uil-home" />
-                <span className="menu-text">Outlets</span>  
-              </Link>
-            </li> */}
-            <li className={location.pathname.includes("user-list") ? "active" : ""}>
-              <Link to={basePath + usersPath} onClick={() => handleMenuItemClick(basePath + usersPath)}>
-                <span className="nav-icon uil uil-users-alt" />
-                <span className="menu-text">Users</span>
+
+            <li className={location.pathname.includes("welcome") ? "active" : ""}>
+              <Link to={basePath + welcomePath} onClick={() => handleMenuItemClick(basePath + welcomePath)}>
+                <span className="nav-icon uil uil-history" />
+                <span className="menu-text">Welcome</span>
               </Link>
             </li>
-            {/* <li className={location.pathname.includes("history") ? "active" : ""}>
-              <Link to={basePath + historyPath} onClick={() => handleMenuItemClick(basePath + historyPath)}>
-                <span className="nav-icon uil uil-history" />
-                <span className="menu-text">Movement History</span> 
-              </Link>
-            </li> */}
-           
+
+            {role === 'admin' && (
+              <li className={location.pathname.includes("user-list") ? "active" : ""}>
+                <Link to={basePath + usersPath} onClick={() => handleMenuItemClick(basePath + usersPath)}>
+                  <span className="nav-icon uil uil-users-alt" />
+                  <span className="menu-text">Users</span>
+                </Link>
+              </li>
+            )}
+
+
           </ul>
         </div>
       </div>

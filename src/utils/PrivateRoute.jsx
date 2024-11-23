@@ -3,10 +3,10 @@ import { Navigate } from "react-router-dom";
 import { ContextDatas } from "../services/Context";
 
 function PrivateRoute({ children }) {
-  const { isLogedIn } = useContext(ContextDatas)
+  const { isLogedIn } = useContext(ContextDatas);
 
-  if (isLogedIn === null || isLogedIn === false) {
-    window.location.href = '/login';
+  if (!isLogedIn) {
+    return <Navigate to="/login" />;
   }
 
   return children;

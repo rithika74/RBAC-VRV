@@ -16,6 +16,8 @@ function UsersList() {
   const [searchQuery, setSearchQuery] = useState('');
   const [previousData, setpreviousData] = useState(null)
 
+  const userRole = localStorage.getItem("role");
+
   const [pagination, setpagination] = useState({
     hasNextPage: false,
     hasPreviousPage: false,
@@ -90,14 +92,12 @@ function UsersList() {
   };
 
 
-  // EDIT PRODUCT FUNCTION
   const handleEdituser = (users) => {
     setpreviousData(users)
     setSelecteduser(users);
     setshowModal(true);
   };
 
-  // ADD OR UPDATE PRODUCT FUNCTION
   const handleUpdate = async (userData) => {
     try {
       if (!userData.id) {
@@ -120,7 +120,6 @@ function UsersList() {
     }
   };
 
-  // DELETE PRODUCT API
   const handleDelete = async (userId) => {
     try {
       console.log('userid', userId);
@@ -135,7 +134,6 @@ function UsersList() {
           setSelecteduser(null);
         }
         setLoading(true)
-        // Adjust current page if the last user on the current page is deleted
         if (users.length === 1 && currentPage > 1) {
 
           setCurrentPage(currentPage - 1);

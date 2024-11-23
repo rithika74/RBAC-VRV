@@ -66,7 +66,6 @@ export default function ModalForm({ show, onHide, next, user, selectedUser, onUp
       backgroundColor: '#DC060A',
       color: '#FFF',
     }),
-    // Add more custom styles as needed
   };
 
   useEffect(() => {
@@ -110,14 +109,15 @@ export default function ModalForm({ show, onHide, next, user, selectedUser, onUp
     try {
       const newUser = {
         ...formData,
-        role: "Viewer",
+        role: formData.role || "",
       };
+
       if (user) {
         const updatedUser = {
           ...user,
           ...formData,
         };
-        // Changes have been made
+
         const changes = {};
         const keysToCheck = ["role", "username", "password", "isActive", "name"];
 
@@ -129,8 +129,9 @@ export default function ModalForm({ show, onHide, next, user, selectedUser, onUp
 
         if (!Object.keys(changes).length) {
           toast.warning("No changes made!");
-          return
+          return;
         }
+
         const response = await ApiCall("put", `/users/${user.id}`, updatedUser);
         if (response.status) {
           onUpdate(updatedUser);
@@ -141,7 +142,6 @@ export default function ModalForm({ show, onHide, next, user, selectedUser, onUp
           console.log("Error updating user:", response);
           toast.error("Error updating user!");
         }
-
       } else {
         const response = await ApiCall("post", "/users", newUser);
         if (response.status) {
@@ -157,8 +157,10 @@ export default function ModalForm({ show, onHide, next, user, selectedUser, onUp
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error("An error occurred while saving the user.");
     }
   };
+
 
   const handleUserSubmit = async (event) => {
     event.preventDefault();
@@ -182,7 +184,7 @@ export default function ModalForm({ show, onHide, next, user, selectedUser, onUp
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (formData[name] === value) {
-      return; // No need to update the state if the value hasn't changed
+      return;
     }
     const inputValue = value
     const isSpace = inputValue.indexOf(" ") === 0;
@@ -251,25 +253,19 @@ export default function ModalForm({ show, onHide, next, user, selectedUser, onUp
                   <Form.Control.Feedback type="invalid"> Please add password</Form.Control.Feedback>
                 </div>
               </div>
-              {/* <select name="roles" id="roles" className="form-control ih-medium ip-light radius-xs b-light px-15" required>
-                    <option value="">Select a role</option>
-                    <option value="admin">Admin</option>
-                    <option value="editor">Editor</option>
-                    <option value="viewer">Viewer</option>
-                  </select> */}
               <div className="col-6">
                 <div className="form-group">
                   <label htmlFor="role" className="il-gray fs-14 fw-500 align-center mb-10">Role</label>
                   <Select
                     value={
                       formData.role
-                        ? { value: formData.role, label: capitalize(formData.role) } // Ensure the value is an object
+                        ? { value: formData.role, label: capitalize(formData.role) }
                         : null
                     }
                     onChange={(selectedOption) =>
                       setFormData((prevData) => ({
                         ...prevData,
-                        role: selectedOption ? selectedOption.value : '', // Update `role` in formData
+                        role: selectedOption ? selectedOption.value : '',
                       }))
                     }
                     options={[

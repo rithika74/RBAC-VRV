@@ -1,11 +1,24 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const ContextDatas = createContext();
 
 const Context = ({ children }) => {
   const [urlPath, setUrlPath] = useState(window.location.pathname ?? "/");
   const [mobileSide, setmobileSide] = useState(false);
-  const [isLogedIn, setisLogedIn] = useState(localStorage.getItem("token") ? true : false )
+  const [isLogedIn, setisLogedIn] = useState(
+    Boolean(localStorage.getItem("userId"))
+  );
+
+  const [userRole, setUserRole] = useState(localStorage.getItem("userRole") || "");
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setisLogedIn(Boolean(localStorage.getItem("userId")));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   return (
     <ContextDatas.Provider
@@ -13,8 +26,10 @@ const Context = ({ children }) => {
         mobileSide,
         setmobileSide,
         urlPath,
-        isLogedIn,
         setUrlPath,
+        isLogedIn,
+        setisLogedIn,
+        setUserRole,
       }}
     >
       {children}

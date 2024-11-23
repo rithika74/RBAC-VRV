@@ -9,26 +9,25 @@ import PageNotFound from "./pages/public/PageNotFound";
 import {
   basePath,
   usersPath,
+  welcomePath,
 } from "./services/UrlPaths";
 import UsersList from "./pages/private/Users/UsersList";
+import PrivateRoute from "./utils/PrivateRoute";
+import Welcome from "./pages/private/Welcome/Welcome";
 
 function App() {
   return (
     <div>
-     
+
       <Routes>
-      
-        {/* <Route path="/login" element={<PageLogin />} /> */}
-        <Route path={basePath} element={<RouterConnection />}>
-        <Route index element={<UsersList />} />
-          <Route index element={<PageDashboard />} />
-          <Route path={basePath + usersPath} element={<UsersList />}/>
-          {/* <Route  path={basePath + productsPath}  element={<ProductsList />}/> */}
+        <Route path="/login" element={<PageLogin />} />
+        <Route path={basePath} element={<PrivateRoute><RouterConnection /></PrivateRoute>}>
+          <Route index path={basePath + welcomePath} element={<Welcome />} />
+          <Route path={basePath + usersPath} element={<UsersList />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
-       
       </Routes>
-      
+
     </div>
   );
 }
