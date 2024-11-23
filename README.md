@@ -14,7 +14,6 @@ This project is an **Admin Dashboard** for managing users and roles, utilizing *
 - **Frontend**: React.js
 - **Mock API**: JSON Server (used for dummy data)
 - **Styling**: CSS, and basic styling tools to enhance the UI
-- **Deployment**: Vercel (for project deployment)
 
 ## Project Structure
 
@@ -54,7 +53,9 @@ npm install -g json-server
 json-server --watch db.json --port 5000
 npm start
 
-## Deployment
+## Login Credentials
+username: admin
+password: 123
 
 
 ## How to Use
