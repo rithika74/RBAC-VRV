@@ -1,0 +1,99 @@
+{
+  "users": [
+    {
+      "id": "4",
+      "name": "David Lee",
+      "username": "david",
+      "password": "david123",
+      "role": "Admin",
+      "status": true
+    },
+    {
+      "id": "5",
+      "name": "Emma Davis",
+      "username": "emma",
+      "password": "emma123",
+      "role": "Editor",
+      "status": true
+    },
+    {
+      "id": "9",
+      "name": "Isla",
+      "username": "isla",
+      "password": "isla123",
+      "role": "Viewer",
+      "status": "active",
+      "isActive": true
+    },
+    {
+      "id": "10",
+      "name": "Jack Martinez",
+      "username": "jack",
+      "password": "jack123",
+      "role": "Viewer",
+      "status": "inactive",
+      "isActive": false
+    },
+    {
+      "id": "4351",
+      "name": "neha",
+      "username": "jg",
+      "role": "viewer",
+      "status": "active",
+      "isActive": true,
+      "password": "444"
+    }
+  ],
+  "roles": [
+    {
+      "id": "1",
+      "name": "Admin",
+      "permissions": [
+        "Read",
+        "Write",
+        "Delete"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Editor",
+      "permissions": [
+        "Read",
+        "Write"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Viewer",
+      "permissions": [
+        "Read"
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "id": "1",
+      "name": "Read"
+    },
+    {
+      "id": "2",
+      "name": "Write"
+    },
+    {
+      "id": "3",
+      "name": "Delete"
+    },
+    {
+      "id": "4",
+      "name": "Manage Users"
+    },
+    {
+      "id": "5",
+      "name": "Manage Roles"
+    },
+    {
+      "id": "6",
+      "name": "View Reports"
+    }
+  ]
+}
