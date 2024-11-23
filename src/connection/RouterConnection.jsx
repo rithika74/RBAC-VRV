@@ -3,7 +3,7 @@ import Header from "../layouts/Header";
 import Footer from "../layouts/Footer";
 import Sidebar from "../layouts/Sidebar";
 import { ContextDatas } from "../services/Context";
-import { Outlet } from "react-router-dom/dist";
+import { Outlet } from "react-router-dom";
 import Loader from "../components/Loader";
 
 function RouterConnection() {

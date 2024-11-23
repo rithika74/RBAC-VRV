@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom/dist";
+import { Route, Routes } from "react-router-dom";
 import RouterConnection from "./connection/RouterConnection";
 import PageLogin from "./pages/public/PageLogin";
 import PageDashboard from "./pages/private/Dasboard/PageDashboard";
