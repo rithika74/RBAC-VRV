@@ -41,19 +41,22 @@ This project is an **Admin Dashboard** for managing users and roles, utilizing *
 └── .gitignore                     # Files to be ignored by Git
 
 
+## Install dependencies
+npm install
+
+
 ## Clone Repository
 git clone https://github.com/rithika74/RBAC-VRV.git
 cd project-name
 npm run dev
 
-## Install dependencies
-npm install
-
 ## Start the JSON Server (for mock data)
 npm install -g json-server
 json-server --watch db.json --port 5000
 
-## Deployment
+## Login Credentials
+username: admin
+password: 123
 
 
 ## How to Use
